@@ -24,6 +24,14 @@
     <ErrorAlert v-if="error">{{ error }}</ErrorAlert>
     <UsersTable v-if="users" :users="users.data" @reload="onReload()" />
   </BoxContainer>
+
+  <UsersTablePagination
+    v-if="users"
+    :page="$props.page"
+    :per-page="users.per_page"
+    :total-pages="users.total_pages"
+    @change="onChangePage"
+  />
 </template>
 
 <script setup>
@@ -37,6 +45,7 @@ import ErrorAlert from '@/components/ErrorAlert.vue'
 import BoxContainer from '@/components/BoxContainer.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
+import UsersTablePagination from '@/components/UsersTablePagination.vue'
 
 /**
  * PROPS
@@ -62,6 +71,7 @@ const error = ref(null)
 const router = useRouter()
 
 const onAddUser = () => router.push(`/add/`)
+const onChangePage = page => router.push(`/${page}`)
 
 const fetchData = async ({ page, search }) => {
   error.value = users.value = null
@@ -113,6 +123,7 @@ watch(() => ({ page: props.page, search: search.value }), fetchData, {
 
     button svg {
       color: var(--primary-color);
+      margin-right: 0.5em;
     }
   }
 }
