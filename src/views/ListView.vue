@@ -19,10 +19,10 @@
         Add User
       </button>
     </div>
+
     <LoadingContent v-if="loading" />
     <ErrorAlert v-if="error">{{ error }}</ErrorAlert>
-
-    <UsersTable v-if="users" :users="users.data" />
+    <UsersTable v-if="users" :users="users.data" @reload="onReload()" />
   </BoxContainer>
 </template>
 
@@ -38,6 +38,9 @@ import BoxContainer from '@/components/BoxContainer.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 
+/**
+ * PROPS
+ */
 const props = defineProps({
   page: {
     type: Number,
@@ -45,19 +48,22 @@ const props = defineProps({
   },
 })
 
+/**
+ * REFS
+ */
 const search = ref(null)
 const loading = ref(false)
 const users = ref(null)
 const error = ref(null)
 
+/**
+ * METHODS
+ */
 const router = useRouter()
+
 const onAddUser = () => router.push(`/add/`)
 
-watch(() => ({ page: props.page, search: search.value }), fetchData, {
-  immediate: true,
-})
-
-async function fetchData({ page, search }) {
+const fetchData = async ({ page, search }) => {
   error.value = users.value = null
   loading.value = true
 
@@ -69,6 +75,15 @@ async function fetchData({ page, search }) {
     loading.value = false
   }
 }
+
+const onReload = () => fetchData({ page: props.page, search: search.value })
+
+/**
+ * UTILS
+ */
+watch(() => ({ page: props.page, search: search.value }), fetchData, {
+  immediate: true,
+})
 </script>
 
 <style scoped>

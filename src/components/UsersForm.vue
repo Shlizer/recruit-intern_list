@@ -50,10 +50,14 @@
 
 <script setup>
 import { ref } from 'vue'
+import { toast } from 'vue3-toastify'
 import BoxContainer from './BoxContainer.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
 
+/**
+ * PROPS
+ */
 const props = defineProps({
   user: {
     first_name: { type: String, requred: true },
@@ -75,6 +79,9 @@ const props = defineProps({
   },
 })
 
+/**
+ * REFS
+ */
 const user = ref({
   first_name: '',
   last_name: '',
@@ -85,6 +92,9 @@ const userOriginal = ref({ ...props.user })
 const avatarFile = ref(null)
 const avatarImage = ref(null)
 
+/**
+ * METHODS
+ */
 const getChangedValues = () => {
   let changedValues = {}
 
@@ -112,11 +122,10 @@ const onSubmit = async () => {
   let changedValues = getChangedValues()
 
   if (Object.keys(changedValues).length === 0) {
-    console.warn("There was no change in form's data.")
+    toast.error("There was no change in form's data.")
     return
   }
 
-  console.log(changedValues)
   if (await props.submitCallback(changedValues)) {
     userOriginal.value = { ...user.value }
   }

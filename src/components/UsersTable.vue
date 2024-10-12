@@ -22,24 +22,57 @@
       </div>
     </div>
   </div>
+
+  <ConfirmModal
+    :show="deleteId > 0"
+    title="Delete user"
+    content="Are you sure you want to delete this user?"
+    @confirm="onDeleteUserConfirm"
+    @cancel="() => (deleteId = 0)"
+  />
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { toast } from 'vue3-toastify'
+import { DeleteUser } from '@/api'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
+import ConfirmModal from './ConfirmModal.vue'
 
-defineProps({
+/**
+ * PROPS
+ */
+const props = defineProps({
   users: {
     type: Array[Object],
     required: true,
   },
+  onReload: {
+    type: Function,
+    required: true,
+  },
 })
 
+/**
+ * REFS
+ */
+const deleteId = ref(0)
+
+/**
+ * METHODS
+ */
 const router = useRouter()
 
 const onEditUser = id => router.push(`/edit/${id}`)
-const onDeleteUser = id => router.push(`/delete/${id}`)
+const onDeleteUser = id => (deleteId.value = id)
+const onDeleteUserConfirm = async () => {
+  await DeleteUser(deleteId.value)
+  deleteId.value = 0
+  toast.error('User deleted')
+  props.onReload()
+}
 </script>
 
 <style scoped>

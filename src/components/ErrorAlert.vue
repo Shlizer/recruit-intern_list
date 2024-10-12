@@ -1,14 +1,10 @@
 <template>
-  <BoxContainer>
-    <div>
-      <slot></slot>
-    </div>
-  </BoxContainer>
+  <div>
+    <slot></slot>
+  </div>
 </template>
 
-<script setup>
-import BoxContainer from './BoxContainer.vue'
-</script>
+<script setup></script>
 
 <style scoped>
 div {

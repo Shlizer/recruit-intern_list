@@ -1,7 +1,6 @@
 <template>
   <h1>
-    <span class="addon" v-if="hasPrefix()">
-      <slot name="prefix"></slot> </span
+    <span class="addon" v-if="hasPrefix()"> <slot name="prefix"></slot> </span
     >{{ label }}
   </h1>
 </template>
@@ -9,6 +8,9 @@
 <script setup>
 import { useSlots } from 'vue'
 
+/**
+ * PROPS
+ */
 defineProps({
   label: {
     type: String,
@@ -16,11 +18,11 @@ defineProps({
   },
 })
 
+/**
+ * METHODS
+ */
 const slots = useSlots()
-
-const hasPrefix = () => {
-  return !!slots.prefix
-}
+const hasPrefix = () => !!slots.prefix
 </script>
 
 <style scoped>

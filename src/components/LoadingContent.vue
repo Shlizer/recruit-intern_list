@@ -1,12 +1,8 @@
 <template>
-  <BoxContainer>
-    <div>Loading...</div>
-  </BoxContainer>
+  <div>Loading...</div>
 </template>
 
-<script setup>
-import BoxContainer from './BoxContainer.vue'
-</script>
+<script setup></script>
 
 <style scoped>
 div {
