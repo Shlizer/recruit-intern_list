@@ -10,7 +10,7 @@ const router = createRouter({
       component: ListView,
       props: route => ({
         ...route.params,
-        ...{ page: Number.parseInt(route.params.page, 10) },
+        ...{ page: Number.parseInt(route.params.page || 0, 10) },
       }),
     },
     {

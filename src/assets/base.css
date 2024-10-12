@@ -2,8 +2,21 @@
   --app-background: #f5f7f9;
   --app-color: #383f47;
 
+  --primary-background: #1e8e66;
+  --primary-background-hover: #24a87a;
+  --primary-color: #fff;
+  --primary-color-hover: #fff;
+
+  --alert-background: #8e1e1e;
+  --alert-background-hover: #a02121;
+  --alert-color: #fff;
+  --alert-color-hover: #fff;
+
   --icons-color: #aeb5bc;
   --icons-color-hover: #949aa0;
+
+  --input-border: #e8ebed;
+  --input-border-hover: #d1d3d4;
 
   --box-background: #fff;
   --box-border-radius: 6px;
@@ -48,4 +61,66 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+.input {
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  border: 1px solid var(--input-border);
+  transition: border-color 0.3s;
+
+  &:hover {
+    border-color: var(--input-border-hover);
+  }
+
+  &:disabled {
+    filter: grayscale(0.7);
+    pointer-events: none;
+  }
+}
+
+.icon {
+  color: var(--icons-color);
+
+  &.small {
+    width: 0.5em;
+  }
+
+  &.interactable {
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: var(--icons-color-hover);
+    }
+  }
+}
+
+input[type='button'] {
+  font-size: 0.9em;
+  padding: 0.8em 1.5em;
+}
+
+.primary {
+  color: var(--primary-color);
+  background-color: var(--primary-background);
+  transition: background-color 0.3s;
+
+  &:hover {
+    color: var(--primary-color-hover);
+    background-color: var(--primary-background-hover);
+  }
+}
+
+.alert {
+  color: var(--alert-color);
+  background-color: var(--alert-background);
+  transition: background-color 0.3s;
+
+  &:hover {
+    color: var(--alert-color-hover);
+    background-color: var(--alert-background-hover);
+  }
 }

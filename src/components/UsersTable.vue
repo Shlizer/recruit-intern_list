@@ -10,13 +10,13 @@
       <div class="table-col">{{ user.first_name }} {{ user.last_name }}</div>
       <div class="table-col">
         <FontAwesomeIcon
-          @click="editUser(user.id)"
-          class="icon"
+          @click="onEditUser(user.id)"
+          class="icon interactable"
           :icon="faPenToSquare"
         />
         <FontAwesomeIcon
-          @click="deleteUser(user.id)"
-          class="icon"
+          @click="onDeleteUser(user.id)"
+          class="icon interactable"
           :icon="faTrash"
         />
       </div>
@@ -29,19 +29,17 @@ import { useRouter } from 'vue-router'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-const router = useRouter()
-
-const editUser = id => {
-  console.log(id)
-  router.push(`/edit/${id}`)
-}
-
 defineProps({
   users: {
     type: Array[Object],
     required: true,
   },
 })
+
+const router = useRouter()
+
+const onEditUser = id => router.push(`/edit/${id}`)
+const onDeleteUser = id => router.push(`/delete/${id}`)
 </script>
 
 <style scoped>
@@ -85,13 +83,6 @@ defineProps({
   width: var(--table-avatar-size);
 }
 .icon {
-  color: var(--icons-color);
   margin-right: 1em;
-  cursor: pointer;
-  transition: color 0.3s;
-
-  &:hover {
-    color: var(--icons-color-hover);
-  }
 }
 </style>
