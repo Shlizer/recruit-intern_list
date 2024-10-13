@@ -31,9 +31,9 @@ npm run build
 
 Due to used external API (https://reqres.in/) that requires JSON format for all REST calls I have to send images as base64 formatted data. Since files used in avatars shouldn't be large, I guess it's not a big deal, but worth a mention.
 
-Another one is not working search. Given API doesn't have known to me possibility to add a param for filtering purposes, so currently it does nothing. I could limit the list locally, but it would be confusing and inaccurate (if searched value would exist in other page than the one we are currently on it wouldn't be shown) or it could have performance issues (this would be possible by fetching all pages and then adding local filtering).
+Another one is not working search. Given API doesn't have known to me possibility to add a param for filtering purposes, so currently it does nothing. I could limit the list locally, but it would be confusing and inaccurate (if searched value would exist on other page, than the one we are currently on, it wouldn't be shown) or it could have performance issues (this would be possible by fetching all pages and then adding local filtering).
 
-Design might be a little bit different than given reference pictures, but I tried to keep the form elements to be consistent in all pages. I won't be a problem to add search bar background or round more 'Add users' button and it might be done in the scoped styles, but that would give mentioned inconsistency.
+Design might be a little bit different than given reference pictures, but I tried to keep the form elements to be consistent in all pages. It won't be a problem to add search bar background or round more 'Add users' button and it might be done in the scoped styles, but that would give mentioned inconsistency.
 
 I also didn't limit avatar props (weight, dimensions or extensions - except it must be an image), so sometimes avatar aspect ratios can be weird.
 
