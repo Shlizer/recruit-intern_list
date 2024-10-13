@@ -5,7 +5,7 @@
   --primary-background: #1e8e66;
   --primary-background-hover: #24a87a;
   --primary-color: #fff;
-  --primary-color-hover: #fff;
+  --primary-color-hover: #f5f5f5;
 
   --alert-background: #8e1e1e;
   --alert-background-hover: #a02121;
@@ -13,7 +13,7 @@
   --alert-color-hover: #fff;
 
   --icons-color: #aeb5bc;
-  --icons-color-hover: #949aa0;
+  --icons-color-hover: #81868b;
 
   --input-border: #e8ebed;
   --input-border-hover: #d1d3d4;
@@ -76,6 +76,11 @@ input,
     filter: grayscale(0.7);
     pointer-events: none;
   }
+}
+
+.avatar {
+  border-radius: 50%;
+  background-color: #eeeeee;
 }
 
 .icon {

@@ -182,7 +182,7 @@ const onSubmit = async () => {
   let changedValues = getChangedValues()
 
   if (Object.keys(changedValues).length === 0) {
-    toast.error("There was no change in form's data.")
+    toast.warn("There was no change in form's data.")
     return
   }
 
@@ -281,7 +281,6 @@ form {
     .avatar {
       width: 50%;
       max-width: 250px;
-      border-radius: 50%;
       margin: 3em;
     }
 
@@ -296,8 +295,12 @@ form {
 
         & svg {
           color: var(--icons-color);
-          margin-right: 0.5em;
+          transition: color 0.3s;
         }
+      }
+
+      &:hover + label svg {
+        color: var(--icons-color-hover);
       }
     }
   }

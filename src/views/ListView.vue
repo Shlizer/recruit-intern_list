@@ -111,6 +111,15 @@ watch(() => ({ page: props.page, search: search.value }), fetchData, {
 
       input {
         padding-right: 3em;
+
+        & + label svg {
+          transition: color 0.3s;
+        }
+
+        &:hover + label svg,
+        &:focus + label svg {
+          color: var(--icons-color-hover);
+        }
       }
 
       label {

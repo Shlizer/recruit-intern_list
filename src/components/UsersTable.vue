@@ -70,7 +70,7 @@ const onDeleteUser = id => (deleteId.value = id)
 const onDeleteUserConfirm = async () => {
   await DeleteUser(deleteId.value)
   deleteId.value = 0
-  toast.error('User deleted')
+  toast.success('User deleted')
   props.onReload()
 }
 </script>
@@ -112,7 +112,6 @@ const onDeleteUserConfirm = async () => {
   font-weight: bold;
 }
 .avatar {
-  border-radius: 50%;
   width: var(--table-avatar-size);
 }
 .icon {

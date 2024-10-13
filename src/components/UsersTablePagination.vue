@@ -71,6 +71,12 @@ ul {
     color: var(--primary-background);
     background-color: var(--primary-color);
     cursor: pointer;
+    transition: color 0.3s background-color 0.3s;
+
+    &:hover {
+      color: var(--primary-background-hover);
+      background-color: var(--primary-color-hover);
+    }
 
     &:first-child {
       border-left: 1px solid var(--input-border);
@@ -80,6 +86,11 @@ ul {
   .current {
     color: var(--primary-color);
     background-color: var(--primary-background);
+
+    &:hover {
+      color: var(--primary-color-hover);
+      background-color: var(--primary-background-hover);
+    }
   }
 
   svg {
