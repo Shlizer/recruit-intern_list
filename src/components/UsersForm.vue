@@ -3,11 +3,27 @@
     <BoxContainer class="form-info">
       <div class="data">
         <div>
-          <label>First Name</label>
+          <label>
+            First Name
+            <FontAwesomeIcon
+              class="icon small interactable"
+              :icon="faAsterisk"
+              v-if="isDirtyProp('first_name') && props.allowRevert"
+              @click="onRevert('first_name')"
+            />
+          </label>
           <input v-model="user.first_name" />
         </div>
         <div>
-          <label>Last Name</label>
+          <label>
+            Last Name
+            <FontAwesomeIcon
+              class="icon interactable"
+              :icon="faAsterisk"
+              v-if="isDirtyProp('last_name') && props.allowRevert"
+              @click="onRevert('last_name')"
+            />
+          </label>
           <input v-model="user.last_name" />
         </div>
       </div>
@@ -37,11 +53,11 @@
           Change photo
         </label>
         <input
-          v-if="avatarImage"
+          v-if="isDirtyProp('avatar') && props.allowRevert"
           type="button"
           class="alert"
           value="Revert"
-          @click="onRevert()"
+          @click="onRevert('avatar')"
         />
       </div>
     </BoxContainer>
@@ -62,7 +78,7 @@ import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import BoxContainer from './BoxContainer.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCamera } from '@fortawesome/free-solid-svg-icons'
+import { faCamera, faAsterisk } from '@fortawesome/free-solid-svg-icons'
 import ConfirmModal from './ConfirmModal.vue'
 
 /**
@@ -74,6 +90,7 @@ const props = defineProps({
     last_name: { type: String, requred: true },
     avatar: { type: String, requred: true },
   },
+  allowRevert: Boolean,
 
   submitLabel: {
     type: String,
@@ -118,14 +135,18 @@ router.beforeEach((to, _from, next) => {
   }
 })
 
+const isDirtyProp = propName => {
+  if (propName === 'avatar') return avatarFile.value !== null
+  return user.value[propName] !== userOriginal.value[propName]
+}
+
 const getChangedValues = () => {
   let changedValues = {}
 
-  if (user.value.first_name !== userOriginal.value.first_name)
+  if (isDirtyProp('first_name'))
     changedValues.first_name = user.value.first_name
-  if (user.value.last_name !== userOriginal.value.last_name)
-    changedValues.last_name = user.value.last_name
-  if (avatarFile.value) changedValues.avatar = avatarFile.value
+  if (isDirtyProp('last_name')) changedValues.last_name = user.value.last_name
+  if (isDirtyProp('avatar')) changedValues.avatar = avatarFile.value
   return changedValues
 }
 
@@ -137,8 +158,10 @@ const onAvatarChanged = $event => {
   }
 }
 
-const onRevert = () => {
-  avatarFile.value = avatarImage.value = null
+const onRevert = propName => {
+  if (propName === 'avatar')
+    return (avatarFile.value = avatarImage.value = null)
+  user.value[propName] = userOriginal.value[propName]
 }
 
 const onSubmit = async () => {

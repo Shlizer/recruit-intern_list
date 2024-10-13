@@ -19,9 +19,10 @@
   <UsersForm
     v-if="user"
     :user="user.data"
-    submit-label="Update Details"
     :submit-disabled="submitting"
     :submit-callback="onSubmit"
+    submit-label="Update Details"
+    allow-revert
   />
 </template>
 

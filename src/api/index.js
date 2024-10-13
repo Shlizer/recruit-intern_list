@@ -1,16 +1,16 @@
-// const imageToBase64 = file => {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader()
+const imageToBase64 = file => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
 
-//     reader.readAsDataURL(file)
-//     reader.onload = function () {
-//       resolve(reader.result)
-//     }
-//     reader.onerror = function (error) {
-//       reject('Error: ', error)
-//     }
-//   })
-// }
+    reader.readAsDataURL(file)
+    reader.onload = function () {
+      resolve(reader.result)
+    }
+    reader.onerror = function (error) {
+      reject('Cannot convert image to base64: ', error)
+    }
+  })
+}
 
 export async function GetUsers(page, search) {
   try {
@@ -34,7 +34,7 @@ export async function GetUser(id) {
 
 export async function AddUser({ first_name, last_name, avatar }) {
   try {
-    //   avatar = await imageToBase64(avatar)
+    avatar = await imageToBase64(avatar)
 
     const response = await fetch('https://reqres.in/api/users', {
       method: 'POST',
@@ -52,7 +52,7 @@ export async function AddUser({ first_name, last_name, avatar }) {
 
 export async function UpdateUser(id, { first_name, last_name, avatar }) {
   try {
-    //   if (avatar) avatar = await imageToBase64(avatar)
+    if (avatar) avatar = await imageToBase64(avatar)
 
     const response = await fetch(`https://reqres.in/api/users/${id}`, {
       method: 'PATCH',
