@@ -13,6 +13,7 @@
     submit-label="Add User"
     :submit-disabled="submitting"
     :submit-callback="onSubmit"
+    :after-submit-callback="onAfterSubmit"
   />
 </template>
 
@@ -40,23 +41,15 @@ const goBack = () => router.back()
 
 const onSubmit = async data => {
   submitting.value = true
-  let toFill = []
-
-  if (!data.first_name) toFill.push('first name')
-  if (!data.last_name) toFill.push('last name')
-  if (!data.avatar) toFill.push('avatar')
-
-  if (toFill.length) {
-    toast.error(`Fields that need to be filled: ${toFill.join(', ')}`)
-    submitting.value = false
-    return false
-  }
 
   try {
     await AddUser(data)
-    router.push('/').then(() => toast.success('User created.'))
+    return true
   } finally {
     submitting.value = false
   }
+}
+const onAfterSubmit = () => {
+  router.push('/').then(() => toast.success('User created.'))
 }
 </script>

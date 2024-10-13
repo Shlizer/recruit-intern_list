@@ -104,6 +104,7 @@ const props = defineProps({
     type: Function,
     requred: true,
   },
+  afterSubmitCallback: Function,
 })
 
 /**
@@ -173,10 +174,23 @@ const onSubmit = async () => {
     return
   }
 
+  let toFill = []
+
+  if (changedValues.first_name === '') toFill.push('first name')
+  if (changedValues.last_name === '') toFill.push('last name')
+  if (!userOriginal.value.avatar && !avatarImage.value) toFill.push('avatar')
+
+  if (toFill.length) {
+    toast.error(`Fields that need to be filled: ${toFill.join(', ')}`)
+    return
+  }
+
   if (await props.submitCallback(changedValues)) {
     userOriginal.value = { ...user.value }
     forceLeavePath.value = null
     avatarFile.value = null
+
+    props.afterSubmitCallback?.()
   }
 }
 
