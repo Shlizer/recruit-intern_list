@@ -46,14 +46,24 @@
       </div>
     </BoxContainer>
   </form>
+
+  <ConfirmModal
+    :show="showModal"
+    title="Unsaved progress"
+    content="You have unsaved progress. Do you want to leave?"
+    @confirm="onConfirmDirtyLeave"
+    @cancel="onCancelDirtyLeave"
+  />
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import BoxContainer from './BoxContainer.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
+import ConfirmModal from './ConfirmModal.vue'
 
 /**
  * PROPS
@@ -91,10 +101,23 @@ const user = ref({
 const userOriginal = ref({ ...props.user })
 const avatarFile = ref(null)
 const avatarImage = ref(null)
+const showModal = ref(false)
+const forceLeavePath = ref(null)
 
 /**
  * METHODS
  */
+const router = useRouter()
+router.beforeEach((to, _from, next) => {
+  if (forceLeavePath.value === null && Object.keys(getChangedValues()).length) {
+    showModal.value = true
+    forceLeavePath.value = to
+    next(false)
+  } else {
+    next()
+  }
+})
+
 const getChangedValues = () => {
   let changedValues = {}
 
@@ -128,8 +151,35 @@ const onSubmit = async () => {
 
   if (await props.submitCallback(changedValues)) {
     userOriginal.value = { ...user.value }
+    forceLeavePath.value = null
   }
 }
+
+const onConfirmDirtyLeave = () => {
+  router.push(forceLeavePath.value)
+}
+
+const onCancelDirtyLeave = () => {
+  forceLeavePath.value = null
+  showModal.value = false
+}
+
+const handleDirtyState = changesCount => {
+  if (changesCount > 0) window.addEventListener('beforeunload', preventUnload)
+  else window.removeEventListener('beforeunload', preventUnload)
+}
+
+const preventUnload = event => {
+  event.preventDefault()
+  event.returnValue = '' // Chrome requires returnValue to be set.
+}
+
+/**
+ * UTILS
+ */
+watch(() => Object.keys(getChangedValues()).length, handleDirtyState, {
+  immediate: true,
+})
 </script>
 
 <style scoped>
