@@ -61,6 +61,13 @@
         />
       </div>
     </BoxContainer>
+    <input
+      type="button"
+      class="primary"
+      :value="$props.submitLabel"
+      :disabled="$props.submitDisabled"
+      @click="onSubmit()"
+    />
   </form>
 
   <ConfirmModal
@@ -116,7 +123,12 @@ const user = ref({
   avatar: '',
   ...props.user,
 })
-const userOriginal = ref({ ...props.user })
+const userOriginal = ref({
+  first_name: '',
+  last_name: '',
+  avatar: '',
+  ...props.user,
+})
 const avatarFile = ref(null)
 const avatarImage = ref(null)
 const showModal = ref(false)
@@ -176,8 +188,16 @@ const onSubmit = async () => {
 
   let toFill = []
 
-  if (changedValues.first_name === '') toFill.push('first name')
-  if (changedValues.last_name === '') toFill.push('last name')
+  if (
+    changedValues.first_name === '' ||
+    (userOriginal.value.first_name === '' && !changedValues.first_name)
+  )
+    toFill.push('first name')
+  if (
+    changedValues.last_name === '' ||
+    (userOriginal.value.last_name === '' && !changedValues.last_name)
+  )
+    toFill.push('last name')
   if (!userOriginal.value.avatar && !avatarImage.value) toFill.push('avatar')
 
   if (toFill.length) {
@@ -227,6 +247,10 @@ form {
   flex-direction: row;
   gap: 2em;
   align-items: stretch;
+
+  & > input {
+    display: none;
+  }
 
   .form-info {
     flex-basis: 70%;
@@ -301,11 +325,21 @@ form {
   form {
     flex-direction: column;
 
-    .form-info .data {
-      display: flex;
-      flex-direction: column;
-      margin-top: 0;
-      margin-bottom: 1em;
+    & > input {
+      display: block;
+    }
+
+    .form-info {
+      & .data {
+        display: flex;
+        flex-direction: column;
+        margin-top: 0;
+        margin-bottom: 1em;
+      }
+
+      & .actions {
+        display: none;
+      }
     }
   }
 }
