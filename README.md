@@ -60,5 +60,5 @@ Extra features:
 
 ## Author and license
 
-Author: Krzysztof 'Shlizer' Hinc
+Author: Krzysztof 'Shlizer' Hinc<br>
 License: MIT

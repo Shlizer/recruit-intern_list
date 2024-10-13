@@ -131,6 +131,7 @@ router.beforeEach((to, _from, next) => {
     forceLeavePath.value = to
     next(false)
   } else {
+    window.removeEventListener('beforeunload', preventUnload)
     next()
   }
 })
@@ -175,6 +176,7 @@ const onSubmit = async () => {
   if (await props.submitCallback(changedValues)) {
     userOriginal.value = { ...user.value }
     forceLeavePath.value = null
+    avatarFile.value = null
   }
 }
 

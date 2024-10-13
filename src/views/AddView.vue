@@ -52,8 +52,11 @@ const onSubmit = async data => {
     return false
   }
 
-  await AddUser(data)
-  submitting.value = false
-  router.push('/').then(() => toast.success('User created.'))
+  try {
+    await AddUser(data)
+    router.push('/').then(() => toast.success('User created.'))
+  } finally {
+    submitting.value = false
+  }
 }
 </script>

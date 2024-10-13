@@ -66,10 +66,14 @@ const goBack = () => router.back()
 
 const onSubmit = async data => {
   submitting.value = true
-  await UpdateUser(user.value.data.id, data)
-  submitting.value = false
-  toast.success('User updated.')
-  return true
+
+  try {
+    await UpdateUser(user.value.data.id, data)
+    toast.success('User updated.')
+    return true
+  } finally {
+    submitting.value = false
+  }
 }
 
 const fetchData = async id => {
