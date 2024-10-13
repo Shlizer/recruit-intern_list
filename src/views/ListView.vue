@@ -127,4 +127,19 @@ watch(() => ({ page: props.page, search: search.value }), fetchData, {
     }
   }
 }
+
+@media (max-width: 500px) {
+  .container {
+    flex-direction: column;
+
+    .panel {
+      flex-direction: column-reverse;
+      gap: 1em;
+
+      .search-panel input {
+        width: 100%;
+      }
+    }
+  }
+}
 </style>

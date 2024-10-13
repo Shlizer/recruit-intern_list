@@ -76,6 +76,32 @@ defineProps({
       display: flex;
       justify-content: end;
       gap: 1em;
+      margin-top: 1.5em;
+    }
+  }
+}
+
+@media (max-width: 780px) {
+  .modal {
+    & > div {
+      top: 0;
+      left: 0;
+      margin: 2.5em;
+      transform: none;
+      max-width: none;
+      width: calc(100% - 5em);
+
+      .title {
+        font-size: 1.5em;
+      }
+
+      .actions {
+        justify-content: space-between;
+
+        & input {
+          padding: 0.8em 3em;
+        }
+      }
     }
   }
 }

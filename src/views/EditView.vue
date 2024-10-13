@@ -94,5 +94,3 @@ const fetchData = async id => {
  */
 watch(() => props.id, fetchData, { immediate: true })
 </script>
-
-<style scoped></style>
